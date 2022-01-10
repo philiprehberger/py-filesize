@@ -34,6 +34,14 @@ is_larger_than(5000000, "1 MB") # True
 - `parse(text)` — Human string to bytes
 - `is_larger_than(size, threshold)` — Compare size to human string
 
+
+## Development
+
+```bash
+pip install -e .
+python -m pytest tests/ -v
+```
+
 ## License
 
 MIT
