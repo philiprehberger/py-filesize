@@ -29,10 +29,12 @@ is_larger_than(5000000, "1 MB") # True
 
 ## API
 
-- `humanize(size, binary=False, precision=1)` — Bytes to human string
-- `format_bytes(size, binary=False, precision=2)` — Alias with precision=2
-- `parse(text)` — Human string to bytes
-- `is_larger_than(size, threshold)` — Compare size to human string
+| Function / Class | Description |
+|------------------|-------------|
+| `humanize(size, binary=False, precision=1)` | Bytes to human string |
+| `format_bytes(size, binary=False, precision=2)` | Alias with precision=2 |
+| `parse(text)` | Human string to bytes |
+| `is_larger_than(size, threshold)` | Compare size to human string |
 
 
 ## Development
