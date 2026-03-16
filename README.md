@@ -1,5 +1,9 @@
 # philiprehberger-filesize
 
+[![Tests](https://github.com/philiprehberger/py-filesize/actions/workflows/publish.yml/badge.svg)](https://github.com/philiprehberger/py-filesize/actions/workflows/publish.yml)
+[![PyPI version](https://img.shields.io/pypi/v/philiprehberger-filesize.svg)](https://pypi.org/project/philiprehberger-filesize/)
+[![License](https://img.shields.io/github/license/philiprehberger/py-filesize)](LICENSE)
+
 Convert bytes to human-readable file sizes and back.
 
 ## Installation
