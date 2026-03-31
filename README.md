@@ -2,8 +2,7 @@
 
 [![Tests](https://github.com/philiprehberger/py-filesize/actions/workflows/publish.yml/badge.svg)](https://github.com/philiprehberger/py-filesize/actions/workflows/publish.yml)
 [![PyPI version](https://img.shields.io/pypi/v/philiprehberger-filesize.svg)](https://pypi.org/project/philiprehberger-filesize/)
-[![License](https://img.shields.io/github/license/philiprehberger/py-filesize)](LICENSE)
-[![Sponsor](https://img.shields.io/badge/sponsor-GitHub%20Sponsors-ec6cb9)](https://github.com/sponsors/philiprehberger)
+[![Last updated](https://img.shields.io/github/last-commit/philiprehberger/py-filesize)](https://github.com/philiprehberger/py-filesize/commits/main)
 
 Convert bytes to human-readable file sizes and back.
 
@@ -35,7 +34,6 @@ is_larger_than(5000000, "1 MB") # True
 - `parse(text)` — Human string to bytes
 - `is_larger_than(size, threshold)` — Compare size to human string
 
-
 ## Development
 
 ```bash
@@ -43,6 +41,24 @@ pip install -e .
 python -m pytest tests/ -v
 ```
 
+## Support
+
+If you find this project useful:
+
+⭐ [Star the repo](https://github.com/philiprehberger/py-filesize)
+
+🐛 [Report issues](https://github.com/philiprehberger/py-filesize/issues?q=is%3Aissue+is%3Aopen+label%3Abug)
+
+💡 [Suggest features](https://github.com/philiprehberger/py-filesize/issues?q=is%3Aissue+is%3Aopen+label%3Aenhancement)
+
+❤️ [Sponsor development](https://github.com/sponsors/philiprehberger)
+
+🌐 [All Open Source Projects](https://philiprehberger.com/open-source-packages)
+
+💻 [GitHub Profile](https://github.com/philiprehberger)
+
+🔗 [LinkedIn Profile](https://www.linkedin.com/in/philiprehberger)
+
 ## License
 
-MIT
+[MIT](LICENSE)
