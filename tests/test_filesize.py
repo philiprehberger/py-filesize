@@ -1,5 +1,15 @@
 import pytest
-from philiprehberger_filesize import humanize, parse, format_bytes, is_larger_than
+from philiprehberger_filesize import (
+    GB,
+    KB,
+    MB,
+    MIB,
+    format_bytes,
+    humanize,
+    is_larger_than,
+    parse,
+    to_unit,
+)
 
 
 def test_humanize_bytes():
@@ -71,3 +81,32 @@ def test_round_trip():
     text = humanize(original)
     parsed = parse(text)
     assert abs(parsed - original) < 100_000  # approximate due to rounding
+
+
+def test_to_unit_kb():
+    assert to_unit(1500, "KB") == 1.5
+
+
+def test_to_unit_mib():
+    assert to_unit(1024 * 1024, "MiB") == 1.0
+
+
+def test_to_unit_case_insensitive():
+    assert to_unit(1000, "kb") == 1.0
+    assert to_unit(1000, "KB") == 1.0
+
+
+def test_to_unit_unknown_raises():
+    with pytest.raises(ValueError):
+        to_unit(1000, "XB")
+
+
+def test_constants_match_units():
+    assert KB == 1000
+    assert MIB == 1024 ** 2
+    assert GB == 1000 ** 3
+
+
+def test_constants_used_for_arithmetic():
+    assert humanize(5 * MB) == "5.0 MB"
+

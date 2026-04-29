@@ -10,6 +10,16 @@ __all__ = [
     "parse",
     "format_bytes",
     "is_larger_than",
+    "to_unit",
+    "BYTES",
+    "KB",
+    "MB",
+    "GB",
+    "TB",
+    "KIB",
+    "MIB",
+    "GIB",
+    "TIB",
 ]
 
 _SI_UNITS = ["B", "KB", "MB", "GB", "TB", "PB", "EB"]
@@ -32,6 +42,16 @@ _UNIT_MULTIPLIERS: dict[str, int] = {
     "pib": 1024**5,
     "eib": 1024**6,
 }
+
+BYTES = 1
+KB = 1000
+MB = 1000**2
+GB = 1000**3
+TB = 1000**4
+KIB = 1024
+MIB = 1024**2
+GIB = 1024**3
+TIB = 1024**4
 
 
 def humanize(size: int | float, *, binary: bool = False, precision: int = 1) -> str:
@@ -104,6 +124,30 @@ def parse(text: str) -> int:
         raise ValueError(msg)
 
     return int(number * _UNIT_MULTIPLIERS[key])
+
+
+def to_unit(size: int | float, unit: str) -> float:
+    """Convert a byte count to a specific named unit, returning a float.
+
+    Useful when you need a numeric value rather than a formatted string.
+    Accepts SI (``"KB"``, ``"MB"``) and binary (``"KiB"``, ``"MiB"``) units.
+
+    Args:
+        size: Size in bytes.
+        unit: Target unit name (case-insensitive). One of
+            ``"B"``, ``"KB"``, ``"MB"``, ``"GB"``, ``"TB"``, ``"PB"``, ``"EB"``,
+            ``"KiB"``, ``"MiB"``, ``"GiB"``, ``"TiB"``, ``"PiB"``, ``"EiB"``.
+
+    Returns:
+        Size converted to the target unit.
+
+    Raises:
+        ValueError: If *unit* is not recognized.
+    """
+    key = unit.lower().strip()
+    if key not in _UNIT_MULTIPLIERS:
+        raise ValueError(f"Unknown unit: '{unit}'")
+    return float(size) / _UNIT_MULTIPLIERS[key]
 
 
 def is_larger_than(size: int | float, threshold: str) -> bool:

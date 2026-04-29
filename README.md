@@ -27,6 +27,32 @@ parse("1 KiB")                  # 1024
 is_larger_than(5000000, "1 MB") # True
 ```
 
+### Convert to a specific unit
+
+`to_unit(size, unit)` returns a float in the requested unit. Useful for arithmetic when a formatted string would not do.
+
+```python
+from philiprehberger_filesize import to_unit
+
+to_unit(1500, "KB")         # 1.5
+to_unit(1024 ** 2, "MiB")   # 1.0
+to_unit(2_500_000, "MB")    # 2.5
+```
+
+### Size constants
+
+Exported integer constants for use as multipliers in code:
+
+```python
+from philiprehberger_filesize import KB, MB, GB, MIB, GIB, humanize
+
+threshold = 5 * MB
+humanize(threshold)             # "5.0 MB"
+humanize(2 * GIB, binary=True)  # "2.0 GiB"
+```
+
+Available: `BYTES`, `KB`, `MB`, `GB`, `TB`, `KIB`, `MIB`, `GIB`, `TIB`.
+
 ## API
 
 | Function / Class | Description |
@@ -34,7 +60,10 @@ is_larger_than(5000000, "1 MB") # True
 | `humanize(size, binary=False, precision=1)` | Bytes to human string |
 | `format_bytes(size, binary=False, precision=2)` | Alias with precision=2 |
 | `parse(text)` | Human string to bytes |
+| `to_unit(size, unit)` | Convert bytes to a specific unit, returning a float |
 | `is_larger_than(size, threshold)` | Compare size to human string |
+| `BYTES`, `KB`, `MB`, `GB`, `TB` | SI multiplier constants (1000-based) |
+| `KIB`, `MIB`, `GIB`, `TIB` | Binary multiplier constants (1024-based) |
 
 ## Development
 
