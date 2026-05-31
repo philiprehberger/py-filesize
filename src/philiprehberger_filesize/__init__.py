@@ -11,6 +11,8 @@ __all__ = [
     "format_bytes",
     "is_larger_than",
     "to_unit",
+    "total",
+    "compare",
     "BYTES",
     "KB",
     "MB",
@@ -161,3 +163,52 @@ def is_larger_than(size: int | float, threshold: str) -> bool:
         True if *size* exceeds the parsed threshold.
     """
     return size > parse(threshold)
+
+
+def total(*sizes: int | str) -> int:
+    """Sum byte counts, accepting plain ints and human-readable strings.
+
+    String values are parsed via :func:`parse`. Returns the total as an int.
+
+    Args:
+        *sizes: Any mix of ``int`` byte counts and human-readable size strings.
+
+    Returns:
+        Sum of all sizes in bytes.
+
+    Raises:
+        TypeError: If an argument is neither ``int`` nor ``str``.
+        ValueError: If a string argument cannot be parsed.
+    """
+    result = 0
+    for item in sizes:
+        if isinstance(item, bool):
+            # bool is a subclass of int; reject to avoid silent surprises.
+            msg = f"Unsupported type for total(): {type(item).__name__}"
+            raise TypeError(msg)
+        if isinstance(item, int):
+            result += item
+        elif isinstance(item, str):
+            result += parse(item)
+        else:
+            msg = f"Unsupported type for total(): {type(item).__name__}"
+            raise TypeError(msg)
+    return result
+
+
+def compare(a: int | str, b: int | str) -> int:
+    """Return -1, 0, or 1 after parsing both operands.
+
+    Strings are normalized via :func:`parse` so mixed int/string size values can
+    be compared directly. Suitable as a building block for sorting mixed sizes.
+
+    Args:
+        a: First size, as ``int`` bytes or human-readable string.
+        b: Second size, as ``int`` bytes or human-readable string.
+
+    Returns:
+        ``-1`` if ``a < b``, ``0`` if equal, ``1`` if ``a > b``.
+    """
+    left = parse(a) if isinstance(a, str) else int(a)
+    right = parse(b) if isinstance(b, str) else int(b)
+    return (left > right) - (left < right)

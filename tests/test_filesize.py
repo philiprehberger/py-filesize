@@ -4,11 +4,13 @@ from philiprehberger_filesize import (
     KB,
     MB,
     MIB,
+    compare,
     format_bytes,
     humanize,
     is_larger_than,
     parse,
     to_unit,
+    total,
 )
 
 
@@ -109,4 +111,51 @@ def test_constants_match_units():
 
 def test_constants_used_for_arithmetic():
     assert humanize(5 * MB) == "5.0 MB"
+
+
+def test_total_mixed_int_and_strings():
+    # parse() uses SI semantics for "KB"/"MB" (1000-based) and binary for "KiB"/"MiB".
+    assert total(1024, "1KB", "2MB") == 1024 + 1000 + 2_000_000
+
+
+def test_total_empty():
+    assert total() == 0
+
+
+def test_total_single_int():
+    assert total(100) == 100
+
+
+def test_total_binary_units():
+    assert total("1 KiB", "1 MiB") == 1024 + 1024**2
+
+
+def test_total_rejects_other_types():
+    with pytest.raises(TypeError):
+        total(1.5)  # type: ignore[arg-type]
+
+
+def test_compare_less():
+    assert compare(100, 200) == -1
+
+
+def test_compare_greater():
+    assert compare(200, 100) == 1
+
+
+def test_compare_equal():
+    assert compare(100, 100) == 0
+
+
+def test_compare_string_vs_int_si():
+    # parse("1 KB") == 1000, so "1 KB" < 1024.
+    assert compare("1 KB", 1024) == -1
+
+
+def test_compare_string_vs_int_equal():
+    assert compare("1 KiB", 1024) == 0
+
+
+def test_compare_two_strings():
+    assert compare("1 MB", "1 KB") == 1
 

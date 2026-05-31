@@ -53,6 +53,25 @@ humanize(2 * GIB, binary=True)  # "2.0 GiB"
 
 Available: `BYTES`, `KB`, `MB`, `GB`, `TB`, `KIB`, `MIB`, `GIB`, `TIB`.
 
+### Summing and comparing sizes
+
+`total(*sizes)` accepts any mix of integer byte counts and human-readable strings, parses the strings via `parse()`, and returns the sum. `compare(a, b)` returns `-1`, `0`, or `1` after parsing each operand — useful for sorting mixed `int`/`str` size values.
+
+```python
+from philiprehberger_filesize import total, compare
+
+total(1024, "1 KB", "2 MB")     # 2_001_024
+total()                         # 0
+
+compare(100, 200)               # -1
+compare("1 KiB", 1024)          # 0
+compare("1 MB", "1 KB")         # 1
+
+sizes = ["10 KB", "1 MB", 500]
+sorted(sizes, key=lambda s: compare(s, 0))
+# [500, '10 KB', '1 MB']
+```
+
 ## API
 
 | Function / Class | Description |
@@ -62,6 +81,8 @@ Available: `BYTES`, `KB`, `MB`, `GB`, `TB`, `KIB`, `MIB`, `GIB`, `TIB`.
 | `parse(text)` | Human string to bytes |
 | `to_unit(size, unit)` | Convert bytes to a specific unit, returning a float |
 | `is_larger_than(size, threshold)` | Compare size to human string |
+| `total(*sizes)` | Sum mixed int/string sizes into bytes |
+| `compare(a, b)` | Return -1/0/1 after parsing both operands |
 | `BYTES`, `KB`, `MB`, `GB`, `TB` | SI multiplier constants (1000-based) |
 | `KIB`, `MIB`, `GIB`, `TIB` | Binary multiplier constants (1024-based) |
 

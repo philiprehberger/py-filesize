@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.3.0 (2026-05-30)
+
+- Add `total()` for summing byte counts from mixed int and human-readable inputs
+- Add `compare(a, b)` returning -1/0/1 after parsing — handy for sorting mixed size values
+
 ## 0.2.0 (2026-04-28)
 
 - Add `to_unit(size, unit)` — convert bytes to a specific named unit returning a float (case-insensitive, accepts SI and binary units)
