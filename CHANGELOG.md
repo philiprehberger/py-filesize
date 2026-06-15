@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.4.0 (2026-06-15)
+
+- Add `from_unit(value, unit)` — inverse of `to_unit()`. Convert a numeric value in a named SI/binary unit to bytes (integer)
+- Add package-card image to README
+
 ## 0.3.0 (2026-05-30)
 
 - Add `total()` for summing byte counts from mixed int and human-readable inputs

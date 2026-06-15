@@ -6,6 +6,7 @@ from philiprehberger_filesize import (
     MIB,
     compare,
     format_bytes,
+    from_unit,
     humanize,
     is_larger_than,
     parse,
@@ -158,4 +159,26 @@ def test_compare_string_vs_int_equal():
 
 def test_compare_two_strings():
     assert compare("1 MB", "1 KB") == 1
+
+
+def test_from_unit_kb():
+    assert from_unit(1.5, "KB") == 1500
+
+
+def test_from_unit_mib():
+    assert from_unit(2, "MiB") == 2 * 1024 ** 2
+
+
+def test_from_unit_case_insensitive():
+    assert from_unit(1, "kb") == from_unit(1, "KB")
+
+
+def test_from_unit_unknown_raises():
+    with pytest.raises(ValueError):
+        from_unit(1, "XB")
+
+
+def test_from_unit_round_trip_with_to_unit():
+    bytes_value = from_unit(1.5, "MB")
+    assert to_unit(bytes_value, "MB") == 1.5
 

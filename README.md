@@ -4,6 +4,8 @@
 [![PyPI version](https://img.shields.io/pypi/v/philiprehberger-filesize.svg)](https://pypi.org/project/philiprehberger-filesize/)
 [![Last updated](https://img.shields.io/github/last-commit/philiprehberger/py-filesize)](https://github.com/philiprehberger/py-filesize/commits/main)
 
+![philiprehberger-filesize](https://raw.githubusercontent.com/philiprehberger/py-filesize/main/package-card.webp)
+
 Convert bytes to human-readable file sizes and back.
 
 ## Installation
@@ -37,6 +39,18 @@ from philiprehberger_filesize import to_unit
 to_unit(1500, "KB")         # 1.5
 to_unit(1024 ** 2, "MiB")   # 1.0
 to_unit(2_500_000, "MB")    # 2.5
+```
+
+### Convert from a unit to bytes
+
+`from_unit(value, unit)` is the inverse of `to_unit`: it converts a numeric value in a named unit to bytes.
+
+```python
+from philiprehberger_filesize import from_unit
+
+from_unit(1.5, "MB")        # 1_500_000
+from_unit(2, "KiB")         # 2048
+from_unit(1, "GB")          # 1_000_000_000
 ```
 
 ### Size constants
@@ -80,6 +94,7 @@ sorted(sizes, key=lambda s: compare(s, 0))
 | `format_bytes(size, binary=False, precision=2)` | Alias with precision=2 |
 | `parse(text)` | Human string to bytes |
 | `to_unit(size, unit)` | Convert bytes to a specific unit, returning a float |
+| `from_unit(value, unit)` | Convert a value in a named unit to bytes (inverse of `to_unit`) |
 | `is_larger_than(size, threshold)` | Compare size to human string |
 | `total(*sizes)` | Sum mixed int/string sizes into bytes |
 | `compare(a, b)` | Return -1/0/1 after parsing both operands |

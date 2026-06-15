@@ -9,6 +9,7 @@ __all__ = [
     "humanize",
     "parse",
     "format_bytes",
+    "from_unit",
     "is_larger_than",
     "to_unit",
     "total",
@@ -150,6 +151,28 @@ def to_unit(size: int | float, unit: str) -> float:
     if key not in _UNIT_MULTIPLIERS:
         raise ValueError(f"Unknown unit: '{unit}'")
     return float(size) / _UNIT_MULTIPLIERS[key]
+
+
+def from_unit(value: int | float, unit: str) -> int:
+    """Convert a numeric value in a named unit to bytes.
+
+    Inverse of :func:`to_unit`. Accepts SI (``"KB"``, ``"MB"``) and binary
+    (``"KiB"``, ``"MiB"``) units; case-insensitive.
+
+    Args:
+        value: Numeric value in the source unit.
+        unit: Source unit name.
+
+    Returns:
+        Size in bytes (integer).
+
+    Raises:
+        ValueError: If *unit* is not recognized.
+    """
+    key = unit.lower().strip()
+    if key not in _UNIT_MULTIPLIERS:
+        raise ValueError(f"Unknown unit: '{unit}'")
+    return int(value * _UNIT_MULTIPLIERS[key])
 
 
 def is_larger_than(size: int | float, threshold: str) -> bool:
